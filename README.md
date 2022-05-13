@@ -1,6 +1,7 @@
 # Study_Unity
 #### Used book : 레트로의 유니티 게임 프로그래밍 에센스 : C#으로 배우는 입문부터 4가지 게임
 #### Used Unty version : 2019.4.15f1
+###### 레트로의 유니티 게임 프로그래밍 에센스 깃허브 주소 https://github.com/IJEMIN/Unity-Programming-Essence
 ###### 모든 폴더는 유니티 프로젝트 폴더로 구성되어 있음
 --------------------------
 * 공부 기간
