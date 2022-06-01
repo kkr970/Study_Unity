@@ -4,6 +4,7 @@
 public class PlayerController : MonoBehaviour {
    public AudioClip deathClip; // 사망시 재생할 오디오 클립
    public float jumpForce = 700f; // 점프 힘
+   public int maxJump = 2;
 
    private int jumpCount = 0; // 누적 점프 횟수
    private bool isGrounded = false; // 바닥에 닿았는지 나타냄
@@ -28,7 +29,7 @@ public class PlayerController : MonoBehaviour {
        }
 
        // 사용자 입력을 감지하고 점프하는 처리
-       if(Input.GetMouseButtonDown(0) && jumpCount < 2)
+       if(Input.GetMouseButtonDown(0) && jumpCount < maxJump)
        {
            jumpCount++;
            playerRigidbody.velocity = Vector2.zero;
