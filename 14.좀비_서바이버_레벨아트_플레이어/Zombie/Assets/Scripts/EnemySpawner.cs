@@ -19,7 +19,7 @@ public class EnemySpawner : MonoBehaviour {
     public Color strongEnemyColor = Color.red; // 강한 적 AI가 가지게 될 피부색
 
     private List<Enemy> enemies = new List<Enemy>(); // 생성된 적들을 담는 리스트
-    private int wave; // 현재 웨이브
+    private int wave = 0; // 현재 웨이브
 
     private void Update() {
         // 게임 오버 상태일때는 생성하지 않음
@@ -46,9 +46,35 @@ public class EnemySpawner : MonoBehaviour {
 
     // 현재 웨이브에 맞춰 적을 생성
     private void SpawnWave() {
-    }
+        wave++;
 
+        int spawnCount = Mathf.RoundToInt(wave * 1.5f);
+
+        for(int i = 0 ; i < spawnCount ; i++)
+        {
+            float enemyIntensity = Random.Range(0f, 1f);
+            CreateEnemy(enemyIntensity);
+        }
+    }
+    
     // 적을 생성하고 생성한 적에게 추적할 대상을 할당
     private void CreateEnemy(float intensity) {
+        float health = Mathf.Lerp(healthMin, healthMax, intensity);
+        float damage = Mathf.Lerp(damageMin, damageMax, intensity);
+        float speed = Mathf.Lerp(speedMin, speedMax, intensity);
+
+        Color skinColor = Color.Lerp(Color.white,strongEnemyColor, intensity);
+
+        Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+
+        Enemy enemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+
+        enemy.Setup(health, damage, speed, skinColor);
+
+        enemies.Add(enemy);
+
+        enemy.onDeath += () => enemies.Remove(enemy);
+        enemy.onDeath += () => Destroy(enemy.gameObject, 10f);
+        enemy.onDeath += () => GameManager.instance.AddScore(100);
     }
 }
